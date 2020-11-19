@@ -13326,6 +13326,96 @@ C – 평균이나 가중평균에서 차감할 값, 平均や加重平均から
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>위에서 자동으로 지정해주는 임계값을 구하는 공식<br>
+上で自動的に指定するしきい値を求める公式</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">cv2</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+
+<span class="n">img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s1">&#39;noisy2.jpg&#39;</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">blur</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">GaussianBlur</span><span class="p">(</span><span class="n">img</span><span class="p">,(</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">),</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># find normalized_histogram, and its cumulative distribution function</span>
+<span class="n">hist</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">calcHist</span><span class="p">([</span><span class="n">blur</span><span class="p">],[</span><span class="mi">0</span><span class="p">],</span><span class="kc">None</span><span class="p">,[</span><span class="mi">256</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">256</span><span class="p">])</span>
+<span class="n">hist_norm</span> <span class="o">=</span> <span class="n">hist</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span><span class="o">/</span><span class="n">hist</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+<span class="n">Q</span> <span class="o">=</span> <span class="n">hist_norm</span><span class="o">.</span><span class="n">cumsum</span><span class="p">()</span>
+
+<span class="n">bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">256</span><span class="p">)</span>
+
+<span class="n">fn_min</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+<span class="n">thresh</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">256</span><span class="p">):</span>
+    <span class="n">p1</span><span class="p">,</span><span class="n">p2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hsplit</span><span class="p">(</span><span class="n">hist_norm</span><span class="p">,[</span><span class="n">i</span><span class="p">])</span> <span class="c1"># probabilities</span>
+    <span class="n">q1</span><span class="p">,</span><span class="n">q2</span> <span class="o">=</span> <span class="n">Q</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="n">Q</span><span class="p">[</span><span class="mi">255</span><span class="p">]</span><span class="o">-</span><span class="n">Q</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="c1"># cum sum of classes</span>
+    <span class="n">b1</span><span class="p">,</span><span class="n">b2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hsplit</span><span class="p">(</span><span class="n">bins</span><span class="p">,[</span><span class="n">i</span><span class="p">])</span> <span class="c1"># weights</span>
+
+    <span class="c1"># finding means and variances</span>
+    <span class="n">m1</span><span class="p">,</span><span class="n">m2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">p1</span><span class="o">*</span><span class="n">b1</span><span class="p">)</span><span class="o">/</span><span class="n">q1</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">p2</span><span class="o">*</span><span class="n">b2</span><span class="p">)</span><span class="o">/</span><span class="n">q2</span>
+    <span class="n">v1</span><span class="p">,</span><span class="n">v2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(((</span><span class="n">b1</span><span class="o">-</span><span class="n">m1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">p1</span><span class="p">)</span><span class="o">/</span><span class="n">q1</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(((</span><span class="n">b2</span><span class="o">-</span><span class="n">m2</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">p2</span><span class="p">)</span><span class="o">/</span><span class="n">q2</span>
+
+    <span class="c1"># calculates the minimization function</span>
+    <span class="n">fn</span> <span class="o">=</span> <span class="n">v1</span><span class="o">*</span><span class="n">q1</span> <span class="o">+</span> <span class="n">v2</span><span class="o">*</span><span class="n">q2</span>
+    <span class="k">if</span> <span class="n">fn</span> <span class="o">&lt;</span> <span class="n">fn_min</span><span class="p">:</span>
+        <span class="n">fn_min</span> <span class="o">=</span> <span class="n">fn</span>
+        <span class="n">thresh</span> <span class="o">=</span> <span class="n">i</span>
+
+<span class="c1"># find otsu&#39;s threshold value with OpenCV function</span>
+<span class="n">ret</span><span class="p">,</span> <span class="n">otsu</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">threshold</span><span class="p">(</span><span class="n">blur</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">255</span><span class="p">,</span><span class="n">cv2</span><span class="o">.</span><span class="n">THRESH_BINARY</span><span class="o">+</span><span class="n">cv2</span><span class="o">.</span><span class="n">THRESH_OTSU</span><span class="p">)</span>
+<span class="nb">print</span> <span class="p">(</span><span class="n">thresh</span><span class="p">,</span><span class="n">ret</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>102 101.0
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>&lt;ipython-input-6-c79e935610bd&gt;:24: RuntimeWarning: invalid value encountered in double_scalars
+  m1,m2 = np.sum(p1*b1)/q1, np.sum(p2*b2)/q2
+&lt;ipython-input-6-c79e935610bd&gt;:24: RuntimeWarning: divide by zero encountered in double_scalars
+  m1,m2 = np.sum(p1*b1)/q1, np.sum(p2*b2)/q2
+&lt;ipython-input-6-c79e935610bd&gt;:25: RuntimeWarning: invalid value encountered in multiply
+  v1,v2 = np.sum(((b1-m1)**2)*p1)/q1,np.sum(((b2-m2)**2)*p2)/q2
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
