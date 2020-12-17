@@ -1,0 +1,11 @@
+for i in range(imgSize[0]):
+    print("[", end="")
+    for j in range(imgSize[1]):
+        print("[", end="")
+        for k in range(imgSize[2]):
+            if(k == imgSize[2]-1):
+                print(imgGet[i][j][k], end="")
+            else :
+                print(imgGet[i][j][k], end=" ")
+        print("]", end="")
+    print("]")
