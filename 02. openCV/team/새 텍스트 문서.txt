@@ -1,0 +1,56 @@
+xw = x + w; yh = y + h; xFinal = 0; yFinal = 0;
+
+1/3 = (x, y - int(h/3)) , (xw, y)
+
+y = y-int(h/3)
+
+検査部分 = (x, y) , (xw, y-1)
+
+while(TRUE):
+ if (検査部分のupCheck == true):
+  y = y-int(h/5)
+  検査部分 = (x, y), (xw, y-1)
+
+ else:
+  break
+
+検査部分 = (x,y), (x-1,yh)
+
+
+while(TRUE):
+ if (検査部分のleftCheck == true):
+  x = x-int(w/5)
+  検査部分 = (x, y), (x-1, yh)
+ else:
+  xFinal = x; yFinal = y;
+  break
+
+検査部分 = (xw-1,y), (xw,yh)
+
+while(TRUE):
+ if (検査部分のrightCheck == true):
+  xw = xw+int(w/5)
+  検査部分 = (xw-1,y), (xw,yh)
+ else:
+  break
+
+検査部分 = (x,yh-1), (xw,yh,)
+
+while(TRUE):
+ if (検査部分のdownCheck == true):
+  yh = yh+int(y/5)
+  検査部分 =(x,yh-1), (xw,yh,)
+ else:
+  break
+
+最終検査部分 = (xFinal, yFinal), (xw, yh)
+
+
+
+
+for i in 検査部分:
+ if (i == 255):
+  true
+  break
+ else:
+  fals
