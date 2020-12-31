@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>練習</title>
+        <meta charset="utf-8">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <style>
+            #refereeBox{
+                font-size: 20px;
+            }
+        </style>
+        <script>
+            var pitcher = 0;
+            var batter = 0;
+            var batChe = 0;
+            var ballCount = 0;
+            var strikeCount = 0;
+            var outCount = 0;
+            $(function(){
+                $("#startBut").hide();
+                $("#readyBut").click(function(){
+                    pitcher = Math.floor(Math.random() * 99) + 1;
+                    $("#refereeBox").html("Ready!")
+                    $("#startBut").show();
+                })
+                
+                $("#startBut").click(function(){
+                    $("#startBut").hide();
+                    batter = $("#batter").val();
+                    if(batter < 0 || batter > 100){
+                        $("#refereeBox").html("false swing!")
+                        strikeCount += 1;
+                    }else if(batter == 0){
+                        if(pitcher%5 == 0){
+                            ballCount += 1;
+                            $("#refereeBox").html("Ball!");
+                        }else{
+                            strikeCount += 1;
+                            $("#refereeBox").html("Strike!");
+                        } 
+                    }else{
+                        if(pitcher == 50){
+                            batChe = batter;
+                        } else {
+                            batChe = batter - (pitcher-50)
+                            if(batChe > 99){
+                                batChe -= 99;
+                            }else if(batChe < 1){
+                                batChe += 99;
+                            }
+                        }
+                        
+                        if(batChe >= 49 && batChe <= 51){
+                            $("#refereeBox").html("HOME RUN!")
+                            ballCount = 0;
+                            strikeCount = 0;
+                        } else if(batChe >= 47 && batChe <= 53){
+                            $("#refereeBox").html("Triple!")
+                            ballCount = 0;
+                            strikeCount = 0;
+                        } else if(batChe >= 42 && batChe <= 58){
+                            $("#refereeBox").html("Doubles!")
+                            ballCount = 0;
+                            strikeCount = 0;
+                        } else if(batChe >= 33 && batChe <= 67){
+                            $("#refereeBox").html("Hits!")
+                            ballCount = 0;
+                            strikeCount = 0;
+                        } else if(batChe >= 23 && batChe <= 77){
+                            $("#refereeBox").html("Foul!")
+                            if(strikeCount != 2){
+                                strikeCount += 1;
+                            }
+                        } else if(batChe >= 11 && batChe <= 89){
+                            if(batChe < 23){
+                                $("#refereeBox").html("Ground Ball, Out!")
+                            } else {
+                                $("#refereeBox").html("Fly Ball, Out!")
+                            }
+                            outCount += 1;
+                            ballCount = 0;
+                            strikeCount = 0;
+                        } else {
+                            $("#refereeBox").html("false swing!")
+                            strikeCount += 1;
+                        }
+                    }
+                    
+                    if(ballCount == 4){
+                        $("#refereeBox").html("Four ball!")
+                        ballCount = 0;
+                        strikeCount = 0;
+                    }else if(strikeCount == 3){
+                        $("#refereeBox").html("Strike out!")
+                        outCount += 1;
+                        ballCount = 0;
+                        strikeCount = 0;
+                    }
+                    $("#BallScreen").html(ballCount);
+                    $("#StrickScreen").html(strikeCount);
+                    $("#OutScreen").html(outCount);
+                    $("#batterScreen").html(batter);
+                    $("#pitcherScreen").html(pitcher);
+                })
+            });
+            
+        </script>
+    </head>
+    <body>
+        <div>
+            <input type="button" value="READY" id="readyBut">
+            <p>必ずREADYボタンをクリックしてください！</p>
+        </div>    
+        <div>
+            <p>0~99まで入力してください。</p>
+            <input type="text" value="" id="batter">
+            <input type="button" value="start" id="startBut">
+        </div>
+        Referee
+        <div id="refereeBox"></div>
+        <br><br>
+        Pitcher
+        <div id="pitcherScreen" ></div>
+        Batter
+        <div id="batterScreen"></div>
+        <br><br>
+        Ball
+        <div id="BallScreen"></div>
+        Strik
+        <div id="StrickScreen"></div>
+        Out
+        <div id="OutScreen"></div>
+        
+    </body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>練習</title>
+        <meta charset="utf-8">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <style>
+            input{
+                font-size: 40px
+            }
+        </style>
+        <script>
+            var inning = 0;
+            var myTeamScore = 0;
+            var cpuTeamScore = 0;
+            $(function(){
+                $("#home").click(function(){
+                    location.replace('defense.html');
+                })
+                $("#away").click(function(){
+                    location.replace('offensive.html');
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <div><input type="button" value="HOME" id="home"></div>
+        <div><input type="button" value="AWAY" id="away"></div>
+    </body>
+</html>
