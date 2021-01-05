@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>練習</title>
+        <meta charset="utf-8">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <style>
+            input{
+                font-size: 40px
+            }
+                        .score{
+                float: left;
+                font-size: 20
+            }
+            #myT{
+                margin-left: 10px;
+            }
+            #cpuT{
+                margin-left: 45px;
+            }
+        </style>
+        <script>
+            var myTeamScore = sessionStorage.getItem("myTeamScore")
+            var cpuTeamScore = sessionStorage.getItem("cpuTeamScore")
+            var myInn = [0,0,0,0,0,0,0,0,0]
+            var cpuInn = [0,0,0,0,0,0,0,0,0]
+            
+            for(var i=1; i<10; i++){
+                myInn[i-1] = sessionStorage.getItem("myInn"+i);
+                myInn[i-1] *=1;
+                cpuInn[i-1] = sessionStorage.getItem("cpuInn"+i)
+                cpuInn[i-1] *=1;
+            }
+            
+            $(function(){
+                $("#myT").html(myTeamScore)
+                $("#cpuT").html(cpuTeamScore)
+                for(var i=1; i<10; i++){
+                    $("#m"+i).html(myInn[i-1]);
+                    $("#c"+i).html(cpuInn[i-1]);
+                }
+            });
+        </script>
+    </head>
+    <body>
+        <div style="font-size: 20px">MY - CPU</div>
+        <div class="score" id="myT"></div>
+        <div class="score" id="cpuT"></div>
+        <br>
+        <table>
+            <tr><th></th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>R</th><th>H</th><th>B</th></tr>
+            <tr><th>MY</th><td id="m1">0</td><td id="m2">0</td><td id="m3">0</td><td id="m4">0</td><td id="m5">0</td><td id="m6">0</td><td id="m7">0</td><td id="m8">0</td><td id="m9">0</td><td id="mR">0</td><td id="mH">0</td><td id="mB">0</td></tr>
+            <tr><th>CPU</th><td id="c1">0</td><td id="c2">0</td><td id="c3">0</td><td id="c4">0</td><td id="c5">0</td><td id="c6">0</td><td id="c7">0</td><td id="c8">0</td><td id="c9">0</td><td id="cH">0</td><td id="cR">0</td><td id="cB">0</td></tr>
+        </table>
+    </body>
+</html>

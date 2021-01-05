@@ -10,10 +10,34 @@
             }
         </style>
         <script>
-            var inning = 0;
-            var myTeamScore = 0;
-            var cpuTeamScore = 0;
+            sessionStorage.setItem("myTeamScore", 0);
+            sessionStorage.setItem("cpuTeamScore", 0);
+            sessionStorage.setItem("myTeamHit", 0);
+            sessionStorage.setItem("cpuTeamHit", 0);
+            sessionStorage.setItem("myTeam4Ball", 0);
+            sessionStorage.setItem("cpuTeam4Ball", 0);
+            for(var i = 1; i<10; i++){
+                sessionStorage.setItem("myInn"+i, 0);
+                sessionStorage.setItem("cpuInn"+i, 0);
+            }
+            
             $(function(){
+                $(".hoAw").hide();
+                $("#three").click(function(){
+                    $(".inning").hide();
+                    $(".hoAw").show();
+                    sessionStorage.setItem("inning", 12);
+                })
+                $("#six").click(function(){
+                    $(".inning").hide();
+                    $(".hoAw").show();
+                    sessionStorage.setItem("inning", 4);
+                })
+                $("#nine").click(function(){
+                    $(".inning").hide();
+                    $(".hoAw").show();
+                    sessionStorage.setItem("inning", 0);
+                })
                 $("#home").click(function(){
                     location.replace('defense.html');
                 })
@@ -24,7 +48,10 @@
         </script>
     </head>
     <body>
-        <div><input type="button" value="HOME" id="home"></div>
-        <div><input type="button" value="AWAY" id="away"></div>
+        <div class="inning" id="three"><input type="button" value="3inning"></div>
+        <div class="inning" id="six"><input type="button" value="6inning"></div>
+        <div class="inning" id="nine"><input type="button" value="9inning"></div>
+        <div class="hoAw" id="home"><input type="button" value="HOME" ></div>
+        <div class="hoAw" id="away"><input type="button" value="AWAY" ></div>
     </body>
 </html>
