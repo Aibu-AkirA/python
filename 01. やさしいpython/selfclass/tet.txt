@@ -1,2 +1,0 @@
-Syetme.out.println();
-Syetme.out.print();	
