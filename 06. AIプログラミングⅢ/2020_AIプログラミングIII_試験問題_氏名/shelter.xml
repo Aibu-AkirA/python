@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ShelterList xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<Shelter>
+		<Name>生麦小学校</Name>
+		<Ward>鶴見区</Ward>
+		<Address>生麦四丁目15番1号</Address>
+		<Notes>被災した住民の避難生活の場所、情報受伝達、備蓄機能を備えた拠点です。</Notes>
+	</Shelter>
+	<Shelter>
+		<Name>三ツ沢小学校</Name>
+		<Ward>神奈川区</Ward>
+		<Address>三ッ沢中町4番地17</Address>
+		<Notes>被災した住民の避難生活の場所、情報受伝達、備蓄機能を備えた拠点です。</Notes>
+	</Shelter>
+	<Shelter>
+		<Name>東小学校</Name>
+		<Ward>西区</Ward>
+		<Address>東ケ丘59番地</Address>
+		<Notes>被災した住民の避難生活の場所、情報受伝達、備蓄機能を備えた拠点です。</Notes>
+	</Shelter>
+	<Shelter>
+		<Name>本町小学校</Name>
+		<Ward>中区</Ward>
+		<Address>花咲町3丁目86番地</Address>
+		<Notes>被災した住民の避難生活の場所、情報受伝達、備蓄機能を備えた拠点です。</Notes>
+	</Shelter>
+	<Shelter>
+		<Name>南吉田小学校</Name>
+		<Ward>南区</Ward>
+		<Address>高根町2丁目14番地</Address>
+		<Notes>被災した住民の避難生活の場所、情報受伝達、備蓄機能を備えた拠点です。</Notes>
+	</Shelter>
+</ShelterList>
