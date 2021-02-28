@@ -1,0 +1,11 @@
+[
+{"href": "http://d.aoikujira.com/bbs/mbbs.php", "text": "お知らせください"},
+{"href": "http://api.aoikujira.com/index.php?time&show", "text": "時間API"},
+{"href": "http://api.aoikujira.com/index.php?zip&show", "text": "郵便番号API"},
+{"href": "http://api.aoikujira.com/index.php?ip&show", "text": "IP確認API"},
+{"href": "http://api.aoikujira.com/index.php?hyakunin&show", "text": "百人一首API"},
+{"href": "http://nadesi.com/History.xml", "text": "日本語プログラミング言語「なでしこ」更新情報RSS"},
+{"href": "http://api.aoikujira.com/index.php?eitango2000&show", "text": "英単語頻出2000語"},
+{"href": "./index.php?memo&show", "text": "利用する前に"},
+{"href": "bbs/mbbs.php", "text": "サポート掲示板"}
+]

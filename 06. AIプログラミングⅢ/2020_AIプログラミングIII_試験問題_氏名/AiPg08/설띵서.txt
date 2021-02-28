@@ -1,0 +1,19 @@
+
+- 프로젝트 생성
+scrapy startproject [프로젝트 이름]
+
+- 프로젝트로 이동
+cd [프로젝트 이름]
+
+- 슨파이더 생성
+scrapy genspider [슨파이더 이름] [링크 주소]
+
+- 슨파이더 실행
+scrapy crawl [슨파이더 이름]
+
+- UTF-8 setting
+FEED_EXPORT_ENCODING = 'utf-8'
+settings.py에 이거 한 줄 추가
+
+- output 만들며 슨파이더 실행   숫자0아님
+scrapy crawl [슨파이더 이름] -O [output 파일 이름 확장자도 적을 것]
